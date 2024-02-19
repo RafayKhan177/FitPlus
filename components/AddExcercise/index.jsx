@@ -19,9 +19,9 @@ export default function AddExcercise() {
 
   
   return (
-    <Center h={300}>
+    <Center h={100}>
       <Button onPress={() => setShowModal(true)} ref={ref}>
-        <ButtonText>Show Modal</ButtonText>
+        <ButtonText>New Workout</ButtonText>
       </Button>
       <Modal
         isOpen={showModal}
@@ -33,7 +33,7 @@ export default function AddExcercise() {
         <ModalBackdrop />
         <ModalContent>
           <ModalHeader>
-            <Heading size="lg">Engage with Modals</Heading>
+            <Heading size="lg">Add New Workout</Heading>
             <ModalCloseButton>{/* <Icon as={CloseIcon} /> */}</ModalCloseButton>
           </ModalHeader>
           <ModalBody>
