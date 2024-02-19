@@ -1,7 +1,18 @@
-import { Heading, Icon, Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from "@gluestack-ui/themed";
+import {
+  Heading,
+  Icon,
+  Modal,
+  ModalBackdrop,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+} from "@gluestack-ui/themed";
 import { Text } from "@gluestack-ui/themed";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
 import { useRef, useState } from "react";
+import AllFeilds from "./AllFeilds";
 
 export default function AddExcercise() {
   const [showModal, setShowModal] = useState(false);
@@ -23,16 +34,10 @@ export default function AddExcercise() {
         <ModalContent>
           <ModalHeader>
             <Heading size="lg">Engage with Modals</Heading>
-            <ModalCloseButton>
-              <Icon as={CloseIcon} />
-            </ModalCloseButton>
+            <ModalCloseButton>{/* <Icon as={CloseIcon} /> */}</ModalCloseButton>
           </ModalHeader>
           <ModalBody>
-            <Text>
-              Elevate user interactions with our versatile modals. Seamlessly
-              integrate notifications, forms, and media displays. Make an impact
-              effortlessly.
-            </Text>
+            <AllFeilds />
           </ModalBody>
           <ModalFooter>
             <Button
