@@ -1,34 +1,17 @@
 import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Button,
-} from "react-native";
-import {
-  ChevronDownIcon,
-  Input,
-  InputField,
-  Select,
-  SelectBackdrop,
-  SelectContent,
-  SelectIcon,
-  SelectInput,
-  SelectItem,
-  SelectPortal,
-} from "@gluestack-ui/themed";
-import { SelectTrigger } from "@gluestack-ui/themed";
-import { StyleSheet } from "react-native";
-// import * as ImagePicker from "expo-image-picker";
+import { View } from "react-native";
+import { Input, InputField } from "@gluestack-ui/themed";
+import { Picker } from "@react-native-picker/picker";
 
-export default function AllFields({ handleData }) {
-  const exercises = [
-    { label: "Running", value: "running" },
-    { label: "Cycling", value: "cycling" },
-    { label: "Swimming", value: "swimming" },
-    { label: "Weightlifting", value: "weightlifting" },
-    { label: "Yoga", value: "yoga" },
-  ];
-  const [image, setImage] = useState(null);
+const exercises = [
+  { label: "Running", value: "running" },
+  { label: "Cycling", value: "cycling" },
+  { label: "Swimming", value: "swimming" },
+  { label: "Weightlifting", value: "weightlifting" },
+  { label: "Yoga", value: "yoga" },
+];
+
+export default function AllFields({ changeData }) {
   const [formData, setFormData] = useState({
     exercise: "",
     duration: "",
@@ -39,57 +22,24 @@ export default function AllFields({ handleData }) {
   });
 
   const handleInputChange = (key, value) => {
-    const updatedFormData = {
+    setFormData({
       ...formData,
       [key]: value,
-    };
-    setFormData(updatedFormData);
-    handleData(updatedFormData);
+    });
+    changeData(formData);
   };
 
-  // const pickImage = async () => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-
-  //   console.log(result);
-
-  //   if (!result.canceled) {
-  //     setImage(result.assets[0].uri);
-  //   }
-  // };
-
   return (
-    <View style={styles.container}>
+    <View>
       {/* Activity Type */}
-      <Select
-        onValueChange={(value) => {
-          handleInputChange("exercise", value);
-        }}
+      <Picker
+        selectedValue={formData.exercise}
+        onValueChange={(itemValue) => handleInputChange("exercise", itemValue)}
       >
-        <SelectTrigger variant="rounded" size="md">
-          <SelectInput placeholder="Select Exercise" />
-          <SelectIcon mr="$3">
-            <ChevronDownIcon />
-          </SelectIcon>
-        </SelectTrigger>
-        <SelectPortal>
-          <SelectBackdrop />
-          <SelectContent>
-            {exercises.map((exercise, index) => (
-              <SelectItem
-                key={index}
-                label={exercise.label}
-                value={exercise.value}
-              />
-            ))}
-          </SelectContent>
-        </SelectPortal>
-      </Select>
+        {exercises.map((val, index) => (
+          <Picker.Item key={index} label={val.label} value={val.value} />
+        ))}
+      </Picker>
 
       {/* Duration */}
       <Input variant="rounded" size="md">
@@ -101,7 +51,7 @@ export default function AllFields({ handleData }) {
 
       {/* Calorie Consumption */}
       <Input
-        onChangeText={(value) => handleInputChange("Calorie", value)}
+        onChangeText={(value) => handleInputChange("calorieConsumption", value)}
         variant="rounded"
         size="md"
       >
@@ -110,7 +60,7 @@ export default function AllFields({ handleData }) {
 
       {/* Timestamp */}
       <Input
-        onChangeText={(value) => handleInputChange("Timestamp", value)}
+        onChangeText={(value) => handleInputChange("timestamp", value)}
         variant="rounded"
         size="md"
       >
@@ -119,7 +69,7 @@ export default function AllFields({ handleData }) {
 
       {/* User Nickname */}
       <Input
-        onChangeText={(value) => handleInputChange("User", value)}
+        onChangeText={(value) => handleInputChange("userNickname", value)}
         variant="rounded"
         size="md"
       >
@@ -128,26 +78,12 @@ export default function AllFields({ handleData }) {
 
       {/* User-input Notes (Optional) */}
       <Input
-        onChangeText={(value) => handleInputChange("Notes", value)}
+        onChangeText={(value) => handleInputChange("userNotes", value)}
         variant="rounded"
         size="md"
       >
         <InputField placeholder="Notes" />
       </Input>
-
-      {/* Picture Upload */}
-      {/* <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-        )}
-      </View> */}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: "1rem",
-  },
-});
