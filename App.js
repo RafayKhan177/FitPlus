@@ -10,7 +10,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <GluestackUIProvider config={config}>
-        <AppStack />
+        <Text>dsa</Text>
+        {/* <AppStack /> */}
       </GluestackUIProvider>
       <StatusBar style="auto" />
     </View>
