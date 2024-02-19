@@ -1,6 +1,5 @@
 import {
   Heading,
-  Icon,
   Modal,
   ModalBackdrop,
   ModalBody,
@@ -9,15 +8,16 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@gluestack-ui/themed";
-import { Text } from "@gluestack-ui/themed";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
 import { useRef, useState } from "react";
 import AllFeilds from "./AllFeilds";
 
 export default function AddExcercise() {
+  const [form, setForm] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  console.log(showModal);
   const ref = useRef(null);
+
+  
   return (
     <Center h={300}>
       <Button onPress={() => setShowModal(true)} ref={ref}>
@@ -37,7 +37,11 @@ export default function AddExcercise() {
             <ModalCloseButton>{/* <Icon as={CloseIcon} /> */}</ModalCloseButton>
           </ModalHeader>
           <ModalBody>
-            <AllFeilds />
+            <AllFeilds
+              handleData={(data) => {
+                setForm(data);
+              }}
+            />
           </ModalBody>
           <ModalFooter>
             <Button
@@ -59,7 +63,7 @@ export default function AddExcercise() {
                 setShowModal(false);
               }}
             >
-              <ButtonText>Explore</ButtonText>
+              <ButtonText onPress={() => console.log(form)}>Create</ButtonText>
             </Button>
           </ModalFooter>
         </ModalContent>

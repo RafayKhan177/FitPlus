@@ -1,5 +1,9 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Image,
+  Button,
+} from "react-native";
 import {
   ChevronDownIcon,
   Input,
@@ -11,22 +15,20 @@ import {
   SelectInput,
   SelectItem,
   SelectPortal,
-  Textarea,
 } from "@gluestack-ui/themed";
-import { TextareaInput } from "@gluestack-ui/themed";
 import { SelectTrigger } from "@gluestack-ui/themed";
 import { StyleSheet } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
-
-export default function AllFields() {
-    const exercises = [
-      { label: "Running", value: "running" },
-      { label: "Cycling", value: "cycling" },
-      { label: "Swimming", value: "swimming" },
-      { label: "Weightlifting", value: "weightlifting" },
-      { label: "Yoga", value: "yoga" },
-      // Add more exercises as needed
-    ];
+export default function AllFields({ handleData }) {
+  const exercises = [
+    { label: "Running", value: "running" },
+    { label: "Cycling", value: "cycling" },
+    { label: "Swimming", value: "swimming" },
+    { label: "Weightlifting", value: "weightlifting" },
+    { label: "Yoga", value: "yoga" },
+  ];
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     exercise: "",
     duration: "",
@@ -36,19 +38,39 @@ export default function AllFields() {
     userNotes: "",
   });
 
-//   console.log(formData)
-
   const handleInputChange = (key, value) => {
-    setFormData({
+    const updatedFormData = {
       ...formData,
       [key]: value,
+    };
+    setFormData(updatedFormData);
+    handleData(updatedFormData);
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
   };
 
   return (
     <View style={styles.container}>
       {/* Activity Type */}
-      <Select>
+      <Select
+        onValueChange={(value) => {
+          handleInputChange("exercise", value);
+        }}
+      >
         <SelectTrigger variant="rounded" size="md">
           <SelectInput placeholder="Select Exercise" />
           <SelectIcon mr="$3">
@@ -78,37 +100,48 @@ export default function AllFields() {
       </Input>
 
       {/* Calorie Consumption */}
-      <Input variant="rounded" size="md">
+      <Input
+        onChangeText={(value) => handleInputChange("Calorie", value)}
+        variant="rounded"
+        size="md"
+      >
         <InputField placeholder="Calorie Consumption" />
       </Input>
 
       {/* Timestamp */}
-      <Input variant="rounded" size="md">
+      <Input
+        onChangeText={(value) => handleInputChange("Timestamp", value)}
+        variant="rounded"
+        size="md"
+      >
         <InputField placeholder="Timestamp" />
       </Input>
 
       {/* User Nickname */}
-      <Input variant="rounded" size="md">
+      <Input
+        onChangeText={(value) => handleInputChange("User", value)}
+        variant="rounded"
+        size="md"
+      >
         <InputField placeholder="User Nickname" />
       </Input>
 
       {/* User-input Notes (Optional) */}
-      <Textarea size="md">
-        <TextareaInput placeholder="Your text goes here..." />
-      </Textarea>
+      <Input
+        onChangeText={(value) => handleInputChange("Notes", value)}
+        variant="rounded"
+        size="md"
+      >
+        <InputField placeholder="Notes" />
+      </Input>
 
       {/* Picture Upload */}
-      <TouchableOpacity
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 10,
-        }}
-      >
-        <View style={{ borderWidth: 1, padding: 10 }}>
-          <Text>Upload Picture</Text>
-        </View>
-      </TouchableOpacity>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        {image && (
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        )}
+      </View>
     </View>
   );
 }
