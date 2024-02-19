@@ -1,17 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import AddExcercise from "./components/AddExcercise/index";
-import { GluestackUIProvider, Text, Box } from "@gluestack-ui/themed";
+import AllActivities from "./screens/Activities";
+import { GluestackUIProvider, Text } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <View style={styles.container}>
       <GluestackUIProvider config={config}>
-        <Box width="100%" justifyContent="center" alignItems="center">
-          <Text>Open up App.js to start working on your app!</Text>
-          <AddExcercise />
-        </Box>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={AllActivities} />
+          <Tab.Screen name="Settings" component={<Text>dsa</Text>} />
+        </Tab.Navigator>
       </GluestackUIProvider>
       <StatusBar style="auto" />
     </View>
