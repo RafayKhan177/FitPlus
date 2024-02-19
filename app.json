@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FitPlus",
-    "slug": "FitPlus",
+    "name": "fitplus",
+    "slug": "fitplus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "90e0eb32-16b1-4ee5-b4c9-429103d443ba"
+      }
+    },
+    "owner": "rafaykhan177"
   }
 }
