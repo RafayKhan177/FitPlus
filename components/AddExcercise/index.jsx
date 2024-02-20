@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
 import AllFeilds from "./AllFeilds";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddExercise() {
   const [formData, setFormData] = useState([]);

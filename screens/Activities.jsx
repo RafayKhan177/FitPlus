@@ -6,7 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import AllActivities from "../components/AllActivities";
 import BottomBar from "../components/BottoBar";
 import { useEffect } from "react";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App({ navigation }) {
   useEffect(() => {
