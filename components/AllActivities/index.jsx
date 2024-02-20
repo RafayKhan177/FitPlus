@@ -25,7 +25,7 @@ export default function Index({ navigation }) {
     getActivities();
 
     // Recheck AsyncStorage every 1 second
-    const intervalId = setInterval(getActivities, 1000);
+    const intervalId = setInterval(getActivities, 5000);
 
     // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
@@ -33,7 +33,7 @@ export default function Index({ navigation }) {
 
   return (
     <View>
-      <ScrollView contentContainerStyle={{ height: 700 }}>
+      <ScrollView >
         {Array.isArray(activities) &&
           activities.map((activity, index) => (
             <SingleCard

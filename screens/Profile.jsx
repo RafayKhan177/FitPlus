@@ -11,7 +11,7 @@ export default function App({ navigation }) {
     <View style={styles.container}>
       <GluestackUIProvider config={config}>
         <SafeAreaProvider>
-          <Profile />
+          <Profile navigation={navigation} />
           <BottomBar navigation={navigation} />
         </SafeAreaProvider>
       </GluestackUIProvider>

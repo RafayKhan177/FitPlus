@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { Input, InputField } from "@gluestack-ui/themed";
 import { Button, ButtonText } from "@gluestack-ui/themed";
 import AsyncStorage from "@react-native-community/async-storage";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   const [profileData, setProfileData] = useState({
     height: "",
     weight: "",
     fitnessObjective: "",
+    userNickname: "",
   });
 
   useEffect(() => {
@@ -18,9 +19,15 @@ const Profile = () => {
         if (storedData) {
           const parsedData = JSON.parse(storedData);
           setProfileData(parsedData);
+        } else {
+          // Show alert if no profile data is found
+          Alert.alert("No Profile Data", "Please add profile information.", [
+            { text: "OK", onPress: () => console.log("OK Pressed") },
+          ]);
         }
       } catch (error) {
         // Handle error
+        console.error("Error fetching profile data:", error);
       }
     };
 
@@ -38,6 +45,7 @@ const Profile = () => {
     try {
       const data = JSON.stringify(profileData);
       await AsyncStorage.setItem("profileData", data);
+      navigation.navigate("AllActivities");
     } catch (error) {
       // Handle error
     }
@@ -69,6 +77,15 @@ const Profile = () => {
         />
       </Input>
 
+      {/* User Nickname */}
+      <Input variant="rounded" size="md" style={styles.input}>
+        <InputField
+          onChangeText={(value) => handleInputChange("userNickname", value)}
+          placeholder="User Nickname"
+          value={profileData.userNickname}
+        />
+      </Input>
+
       <Button onPress={handleSaveProfile} style={styles.button}>
         <ButtonText>Save Profile</ButtonText>
       </Button>
@@ -81,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingVertical:20
+    paddingVertical: 20,
   },
   input: {
     width: "80%",

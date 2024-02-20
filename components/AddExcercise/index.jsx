@@ -20,13 +20,10 @@ export default function AddExercise() {
   };
 
   return (
-    <Center h={100}>
-      <Button onPress={() => console.log("New Workout")} ref={ref}>
-        <ButtonText>New Workout</ButtonText>
-      </Button>
+    <Center>
       <AllFeilds changeData={(e) => setFormData(e)} />
       <Button onPress={handleCreate}>
-        <ButtonText>Create</ButtonText>
+        <ButtonText>Create New Workout</ButtonText>
       </Button>
     </Center>
   );
