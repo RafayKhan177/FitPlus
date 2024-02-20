@@ -33,7 +33,7 @@ export default function Index({ navigation }) {
 
   return (
     <View>
-      <ScrollView >
+      <ScrollView style={{ marginBottom: 80}}>
         {Array.isArray(activities) &&
           activities.map((activity, index) => (
             <SingleCard
