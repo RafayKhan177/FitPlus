@@ -15,7 +15,7 @@ const BottomBar = ({ navigation }) => {
         onPress={() => navigation.navigate("AddExercise")}
         style={styles.button}
       >
-        <Ionicons name="search" size={24} color="black" />
+        <Ionicons name="add-circle-sharp" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate("Profile")}
