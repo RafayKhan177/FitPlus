@@ -3,16 +3,16 @@ import { StyleSheet, View } from "react-native";
 import { GluestackUIProvider, Text } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AllActivities from "../components/AllActivities";
-import BottomBar from "../components/BottoBar";
+import Summary from "../components/Summary";
 
-export default function App({ navigation }) {
+export default function App({ route }) {
+  const { activity } = route?.params;
+
   return (
     <View style={styles.container}>
       <GluestackUIProvider config={config}>
         <SafeAreaProvider>
-          <AllActivities navigation={navigation} />
-          <BottomBar navigation={navigation} />
+          <Summary data={activity} />
         </SafeAreaProvider>
       </GluestackUIProvider>
       <StatusBar style="auto" />
