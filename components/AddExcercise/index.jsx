@@ -1,3 +1,4 @@
+import React, { useState, useRef, useEffect } from "react";
 import {
   Heading,
   Modal,
@@ -9,39 +10,48 @@ import {
   ModalHeader,
 } from "@gluestack-ui/themed";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
-import { useRef, useState } from "react";
+import { Text } from "react-native-paper";
 import AllFeilds from "./AllFeilds";
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default function AddExcercise() {
-  const [form, setForm] = useState([]);
+
+export default function AddExercise() {
+  const [formData, setFormData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const ref = useRef(null);
+  console.log(formData);
 
-  
+  const handleCreate = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("activity");
+      const oldArray = jsonValue != null ? JSON.parse(jsonValue) : [];
+      console.log(oldArray);
+      const newArray = JSON.stringify([...oldArray, formData]);
+      await AsyncStorage.setItem("activity", newArray);
+    } catch (e) {
+      // handle error
+    }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <Center h={100}>
+      <Text>...</Text>
       <Button onPress={() => setShowModal(true)} ref={ref}>
         <ButtonText>New Workout</ButtonText>
       </Button>
-      <Modal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-        }}
-        finalFocusRef={ref}
-      >
+      <Modal isOpen={showModal} onClose={handleModalClose} finalFocusRef={ref}>
         <ModalBackdrop />
         <ModalContent>
           <ModalHeader>
             <Heading size="lg">Add New Workout</Heading>
-            <ModalCloseButton>{/* <Icon as={CloseIcon} /> */}</ModalCloseButton>
+            <ModalCloseButton />
           </ModalHeader>
           <ModalBody>
-            <AllFeilds
-              handleData={(data) => {
-                setForm(data);
-              }}
-            />
+            <AllFeilds changeData={(e) => setFormData(e)} />
           </ModalBody>
           <ModalFooter>
             <Button
@@ -49,9 +59,7 @@ export default function AddExcercise() {
               size="sm"
               action="secondary"
               mr="$3"
-              onPress={() => {
-                setShowModal(false);
-              }}
+              onPress={handleModalClose}
             >
               <ButtonText>Cancel</ButtonText>
             </Button>
@@ -59,11 +67,9 @@ export default function AddExcercise() {
               size="sm"
               action="positive"
               borderWidth="$0"
-              onPress={() => {
-                setShowModal(false);
-              }}
+              onPress={handleCreate}
             >
-              <ButtonText onPress={() => console.log(form)}>Create</ButtonText>
+              <ButtonText>Create</ButtonText>
             </Button>
           </ModalFooter>
         </ModalContent>

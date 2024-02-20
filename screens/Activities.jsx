@@ -7,7 +7,11 @@ export default function Activities() {
   return (
     <View>
       <Text>Activities</Text>
+      <Text>Activities</Text>
+      <Text>Activities</Text>
+      <Text>Activities</Text>
       <AddExcercise />
+      {/* <AddExcercise /> */}
       <AllActivities />
     </View>
   );
