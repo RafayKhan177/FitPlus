@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import { Input, InputField } from "@gluestack-ui/themed";
 import { Button, ButtonText } from "@gluestack-ui/themed";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
   const [profileData, setProfileData] = useState({
