@@ -50,32 +50,46 @@ export default function AllFields({ changeData }) {
   console.log(formData);
 
   const [showTimePicker, setShowTimePicker] = useState(false);
+// Function to handle changes in form input
+const handleInputChange = (key, value) => {
+  // Updating the form data with the new key-value pair
+  const updatedFormData = {
+    ...formData,
+    [key]: value,
+  };
+  // Setting the updated form data
+  setFormData(updatedFormData);
+  // Triggering a function to update external data
+  changeData(updatedFormData);
+};
 
-  const handleInputChange = (key, value) => {
-    const updatedFormData = {
+// Function to handle changes in time input
+const handleTimeChange = (event, selectedTime) => {
+  // Hiding the time picker after selection
+  setShowTimePicker(false);
+  // Checking if a valid time is selected
+  if (selectedTime !== undefined) {
+    // Converting the selected time to a Date object
+    const selectedDate = new Date(selectedTime);
+    // Extracting hours and minutes from the selected time
+    const hours = selectedDate.getHours();
+    const minutes = selectedDate.getMinutes();
+    // Determining whether it's AM or PM
+    const ampm = hours >= 12 ? "PM" : "AM";
+    // Formatting hours to 12-hour format
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    // Formatting minutes (adding leading zero if less than 10)
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+    // Constructing the formatted time string
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+    // Updating the form data with the formatted time
+    setFormData({
       ...formData,
-      [key]: value,
-    };
-    setFormData(updatedFormData);
-    changeData(updatedFormData);
-  };
+      duration: formattedTime,
+    });
+  }
+};
 
-  const handleTimeChange = (event, selectedTime) => {
-    setShowTimePicker(false);
-    if (selectedTime !== undefined) {
-      const selectedDate = new Date(selectedTime);
-      const hours = selectedDate.getHours();
-      const minutes = selectedDate.getMinutes();
-      const ampm = hours >= 12 ? "PM" : "AM";
-      const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-      const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-      const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
-      setFormData({
-        ...formData,
-        duration: formattedTime,
-      });
-    }
-  };
 
   return (
     <View>

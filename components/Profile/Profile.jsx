@@ -34,6 +34,7 @@ const Profile = ({ navigation }) => {
     fetchProfileData();
   }, []);
 
+      // handle All Inputs Values 
   const handleInputChange = (key, value) => {
     setProfileData({
       ...profileData,
@@ -48,6 +49,7 @@ const Profile = ({ navigation }) => {
       navigation.navigate("AllActivities");
     } catch (error) {
       // Handle error
+      console.error(error);
     }
   };
 

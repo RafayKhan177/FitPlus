@@ -10,18 +10,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App({ navigation }) {
   useEffect(() => {
+    // Define an asynchronous function to fetch profile data
     const fetchProfileData = async () => {
       try {
+        // Attempt to retrieve stored profile data from AsyncStorage
         const storedData = await AsyncStorage.getItem("profileData");
+        // If no stored data is found, navigate to the Profile screen
         if (!storedData) {
           navigation.navigate("Profile");
         }
       } catch (error) {
-        // Handle error
+        // Handle any errors that occur during the fetching process
         console.error("Error fetching profile data:", error);
       }
     };
 
+    // Call the fetchProfileData function when the component mounts (empty dependency array means it runs once)
     fetchProfileData();
   }, []);
 

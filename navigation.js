@@ -5,10 +5,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import Profile from "./screens/Profile";
 import Summary from "./screens/Summary";
 
+// Create a stack navigator
 const Stack = createStackNavigator();
 
+// Define the main app stack
 const AppStack = () => {
   return (
+    // Wrap the stack navigator with NavigationContainer
     <NavigationContainer>
       <Stack.Navigator initialRouteName="AllActivities">
         <Stack.Screen name="AllActivities" component={AllActivities} />
