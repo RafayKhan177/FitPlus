@@ -22,11 +22,12 @@ export default function AllFields({ changeData }) {
   });
 
   const handleInputChange = (key, value) => {
-    setFormData({
+    const updatedFormData = {
       ...formData,
       [key]: value,
-    });
-    changeData(formData);
+    };
+    setFormData(updatedFormData);
+    changeData(updatedFormData);
   };
 
   return (
@@ -50,39 +51,37 @@ export default function AllFields({ changeData }) {
       </Input>
 
       {/* Calorie Consumption */}
-      <Input
-        onChangeText={(value) => handleInputChange("calorieConsumption", value)}
-        variant="rounded"
-        size="md"
-      >
-        <InputField placeholder="Calorie Consumption" />
+      <Input variant="rounded" size="md">
+        <InputField
+          onChangeText={(value) =>
+            handleInputChange("calorieConsumption", value)
+          }
+          placeholder="Calorie Consumption"
+        />
       </Input>
 
       {/* Timestamp */}
-      <Input
-        onChangeText={(value) => handleInputChange("timestamp", value)}
-        variant="rounded"
-        size="md"
-      >
-        <InputField placeholder="Timestamp" />
+      <Input variant="rounded" size="md">
+        <InputField
+          onChangeText={(value) => handleInputChange("timestamp", value)}
+          placeholder="Timestamp"
+        />
       </Input>
 
       {/* User Nickname */}
-      <Input
-        onChangeText={(value) => handleInputChange("userNickname", value)}
-        variant="rounded"
-        size="md"
-      >
-        <InputField placeholder="User Nickname" />
+      <Input variant="rounded" size="md">
+        <InputField
+          onChangeText={(value) => handleInputChange("userNickname", value)}
+          placeholder="User Nickname"
+        />
       </Input>
 
       {/* User-input Notes (Optional) */}
-      <Input
-        onChangeText={(value) => handleInputChange("userNotes", value)}
-        variant="rounded"
-        size="md"
-      >
-        <InputField placeholder="Notes" />
+      <Input variant="rounded" size="md">
+        <InputField
+          onChangeText={(value) => handleInputChange("userNotes", value)}
+          placeholder="Notes"
+        />
       </Input>
     </View>
   );

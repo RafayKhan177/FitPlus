@@ -1,3 +1,4 @@
+import React, { useState, useRef, useEffect } from "react";
 import {
   Heading,
   Modal,
@@ -9,36 +10,31 @@ import {
   ModalHeader,
 } from "@gluestack-ui/themed";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
-import { useRef, useState } from "react";
-import AllFeilds from "./AllFeilds";
 import { Text } from "react-native-paper";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AllFeilds from "./AllFeilds";
+import AsyncStorage from '@react-native-community/async-storage';
 
-export default function AddExcercise() {
-  const [form, setForm] = useState([]);
+
+export default function AddExercise() {
+  const [formData, setFormData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const ref = useRef(null);
+  console.log(formData);
 
-  const save = async (formData) => {
-    // try {
-    //   // Get existing activity data from AsyncStorage
-    //   const existingActivity = await AsyncStorage.getItem("activity");
-    //   console.log(existingActivity);
-    //   let updatedActivity = [];
-    //   // Parse existing activity data or initialize as an empty array if null
-    //   if (existingActivity) {
-    //     const parsedActivity = JSON.parse(existingActivity);
-    //     updatedActivity = [...parsedActivity, formData];
-    //   } else {
-    //     // If no existing activity data, set the new formData as an array
-    //     updatedActivity = [formData];
-    //   }
-    //   // Save the updated activity data to AsyncStorage
-    //   await AsyncStorage.setItem("activity", JSON.stringify(updatedActivity));
-    // } catch (e) {
-    //   // Handle errors here
-    //   console.error("Error saving activity data:", e);
-    // }
+  const handleCreate = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("activity");
+      const oldArray = jsonValue != null ? JSON.parse(jsonValue) : [];
+      console.log(oldArray);
+      const newArray = JSON.stringify([...oldArray, formData]);
+      await AsyncStorage.setItem("activity", newArray);
+    } catch (e) {
+      // handle error
+    }
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
   };
 
   return (
@@ -47,21 +43,15 @@ export default function AddExcercise() {
       <Button onPress={() => setShowModal(true)} ref={ref}>
         <ButtonText>New Workout</ButtonText>
       </Button>
-      <Modal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-        }}
-        finalFocusRef={ref}
-      >
+      <Modal isOpen={showModal} onClose={handleModalClose} finalFocusRef={ref}>
         <ModalBackdrop />
         <ModalContent>
           <ModalHeader>
             <Heading size="lg">Add New Workout</Heading>
-            <ModalCloseButton>{/* <Icon as={CloseIcon} /> */}</ModalCloseButton>
+            <ModalCloseButton />
           </ModalHeader>
           <ModalBody>
-            <AllFeilds changeData={(e) => setForm(e)} />
+            <AllFeilds changeData={(e) => setFormData(e)} />
           </ModalBody>
           <ModalFooter>
             <Button
@@ -69,9 +59,7 @@ export default function AddExcercise() {
               size="sm"
               action="secondary"
               mr="$3"
-              onPress={() => {
-                setShowModal(false);
-              }}
+              onPress={handleModalClose}
             >
               <ButtonText>Cancel</ButtonText>
             </Button>
@@ -79,11 +67,9 @@ export default function AddExcercise() {
               size="sm"
               action="positive"
               borderWidth="$0"
-              onPress={() => {
-                setShowModal(false);
-              }}
+              onPress={handleCreate}
             >
-              <ButtonText onPress={save}>Create</ButtonText>
+              <ButtonText>Create</ButtonText>
             </Button>
           </ModalFooter>
         </ModalContent>

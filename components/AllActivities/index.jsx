@@ -1,15 +1,42 @@
-import { View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { View, ScrollView } from "react-native";
 import SingleCard from "./SingleCard";
-import { ScrollView } from "@gluestack-ui/themed";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Index() {
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    const getActivities = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("activity");
+        if (jsonValue !== null) {
+          // value previously stored, parse it into an array
+          const array = JSON.parse(jsonValue);
+          console.log(array);
+          setActivities(array);
+        }
+      } catch (e) {
+        console.error("Error reading value: ", e);
+      }
+    };
+
+    // Call getActivities initially
+    getActivities();
+
+    // Recheck AsyncStorage every 1 second
+    const intervalId = setInterval(getActivities, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <View>
-      <ScrollView h={700}>
-        <SingleCard />
-        <SingleCard />
-        <SingleCard />
+      <ScrollView contentContainerStyle={{ height: 700 }}>
+        {Array.isArray(activities) && activities.map((activity, index) => (
+          <SingleCard key={index} activity={activity} />
+        ))}
       </ScrollView>
     </View>
   );
