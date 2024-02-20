@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { GluestackUIProvider, Text } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AllActivities from "../components/AllActivities";
+import AddExcercise from "../components/AddExcercise";
 import BottomBar from "../components/BottoBar";
 
 export default function App({ navigation }) {
@@ -11,7 +11,7 @@ export default function App({ navigation }) {
     <View style={styles.container}>
       <GluestackUIProvider config={config}>
         <SafeAreaProvider>
-          <AllActivities />
+          <AddExcercise />
           <BottomBar navigation={navigation} />
         </SafeAreaProvider>
       </GluestackUIProvider>

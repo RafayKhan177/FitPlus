@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Card, Heading } from "@gluestack-ui/themed";
 
-export default function singleCard({ activity }) {
+export default function singleCard({ activity, navigation }) {
   return (
     <View>
       <Card size="md" variant="elevated" m="$3">

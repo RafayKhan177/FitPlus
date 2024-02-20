@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import SingleCard from "./SingleCard";
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
 
-export default function Index() {
+export default function Index({ navigation }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -34,9 +34,14 @@ export default function Index() {
   return (
     <View>
       <ScrollView contentContainerStyle={{ height: 700 }}>
-        {Array.isArray(activities) && activities.map((activity, index) => (
-          <SingleCard key={index} activity={activity} />
-        ))}
+        {Array.isArray(activities) &&
+          activities.map((activity, index) => (
+            <SingleCard
+              key={index}
+              activity={activity}
+              navigation={navigation}
+            />
+          ))}
       </ScrollView>
     </View>
   );

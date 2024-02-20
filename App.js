@@ -1,29 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import { GluestackUIProvider, Text } from "@gluestack-ui/themed";
-import { config } from "@gluestack-ui/config"; // Optional if you want to use default theme
-import "react-native-gesture-handler";
-import AllActivities from "./screens/Activities";
+import { config } from "@gluestack-ui/config";
 
-import { AppStack } from "./navigation";
+import AppStack from "./navigation";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <GluestackUIProvider config={config}>
-        {/* <Text>Rafay Isdsasdas dsBota</Text> */}
-        <AllActivities />
-      </GluestackUIProvider>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <AppStack />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

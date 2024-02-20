@@ -34,6 +34,7 @@ export default function AllFields({ changeData }) {
     <View>
       {/* Activity Type */}
       <Picker
+        style={{ marginTop: 200 }}
         selectedValue={formData.exercise}
         onValueChange={(itemValue) => handleInputChange("exercise", itemValue)}
       >

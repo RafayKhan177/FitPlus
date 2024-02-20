@@ -1,25 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Heading,
-  Modal,
-  ModalBackdrop,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-} from "@gluestack-ui/themed";
+import React, { useState, useRef } from "react";
 import { Button, ButtonText, Center } from "@gluestack-ui/themed";
-import { Text } from "react-native-paper";
 import AllFeilds from "./AllFeilds";
-import AsyncStorage from '@react-native-community/async-storage';
-
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function AddExercise() {
   const [formData, setFormData] = useState([]);
-  const [showModal, setShowModal] = useState(false);
   const ref = useRef(null);
-  console.log(formData);
 
   const handleCreate = async () => {
     try {
@@ -33,47 +19,15 @@ export default function AddExercise() {
     }
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
   return (
     <Center h={100}>
-      <Text>...</Text>
-      <Button onPress={() => setShowModal(true)} ref={ref}>
+      <Button onPress={() => console.log("New Workout")} ref={ref}>
         <ButtonText>New Workout</ButtonText>
       </Button>
-      <Modal isOpen={showModal} onClose={handleModalClose} finalFocusRef={ref}>
-        <ModalBackdrop />
-        <ModalContent>
-          <ModalHeader>
-            <Heading size="lg">Add New Workout</Heading>
-            <ModalCloseButton />
-          </ModalHeader>
-          <ModalBody>
-            <AllFeilds changeData={(e) => setFormData(e)} />
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              variant="outline"
-              size="sm"
-              action="secondary"
-              mr="$3"
-              onPress={handleModalClose}
-            >
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button
-              size="sm"
-              action="positive"
-              borderWidth="$0"
-              onPress={handleCreate}
-            >
-              <ButtonText>Create</ButtonText>
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <AllFeilds changeData={(e) => setFormData(e)} />
+      <Button onPress={handleCreate}>
+        <ButtonText>Create</ButtonText>
+      </Button>
     </Center>
   );
 }
