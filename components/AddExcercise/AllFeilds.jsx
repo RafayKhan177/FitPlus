@@ -39,57 +39,53 @@ const formatDate = (date) => {
 };
 
 export default function AllFields({ changeData }) {
+  const [duration, setDuration] = useState("");
   const [formData, setFormData] = useState({
-    timestamp: formatDate(new Date()), // Add current timestamp with the specified format
-    duration: "",
+    timestamp: formatDate(new Date()),
     exercise: "",
     calorieConsumption: "",
     userNotes: "",
   });
 
-  console.log(formData);
+  // console.log(formData);
 
   const [showTimePicker, setShowTimePicker] = useState(false);
-// Function to handle changes in form input
-const handleInputChange = (key, value) => {
-  // Updating the form data with the new key-value pair
-  const updatedFormData = {
-    ...formData,
-    [key]: value,
-  };
-  // Setting the updated form data
-  setFormData(updatedFormData);
-  // Triggering a function to update external data
-  changeData(updatedFormData);
-};
-
-// Function to handle changes in time input
-const handleTimeChange = (event, selectedTime) => {
-  // Hiding the time picker after selection
-  setShowTimePicker(false);
-  // Checking if a valid time is selected
-  if (selectedTime !== undefined) {
-    // Converting the selected time to a Date object
-    const selectedDate = new Date(selectedTime);
-    // Extracting hours and minutes from the selected time
-    const hours = selectedDate.getHours();
-    const minutes = selectedDate.getMinutes();
-    // Determining whether it's AM or PM
-    const ampm = hours >= 12 ? "PM" : "AM";
-    // Formatting hours to 12-hour format
-    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
-    // Formatting minutes (adding leading zero if less than 10)
-    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-    // Constructing the formatted time string
-    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
-    // Updating the form data with the formatted time
-    setFormData({
+  // Function to handle changes in form input
+  const handleInputChange = (key, value) => {
+    // Updating the form data with the new key-value pair
+    const updatedFormData = {
       ...formData,
-      duration: formattedTime,
-    });
-  }
-};
+      [key]: value,
+    };
+    // Setting the updated form data
+    setFormData(updatedFormData);
+    // Triggering a function to update external data
+    changeData({ ...updatedFormData, duration: duration });
+  };
 
+  // Function to handle changes in time input
+  const handleTimeChange = (event, selectedTime) => {
+    // Hiding the time picker after selection
+    setShowTimePicker(false);
+    // Checking if a valid time is selected
+    if (selectedTime !== undefined) {
+      // Converting the selected time to a Date object
+      const selectedDate = new Date(selectedTime);
+      // Extracting hours and minutes from the selected time
+      const hours = selectedDate.getHours();
+      const minutes = selectedDate.getMinutes();
+      // Determining whether it's AM or PM
+      const ampm = hours >= 12 ? "PM" : "AM";
+      // Formatting hours to 12-hour format
+      const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+      // Formatting minutes (adding leading zero if less than 10)
+      const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+      // Constructing the formatted time string
+      const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
+      // Updating the form data with the formatted time
+      setDuration(formattedTime);
+    }
+  };
 
   return (
     <View>
@@ -123,13 +119,13 @@ const handleTimeChange = (event, selectedTime) => {
         <Button title={"Select Time"} onPress={() => setShowTimePicker(true)} />
         {showTimePicker && (
           <RNDateTimePicker
-          mode="time"
-          value={new Date()}
-          display="clock"
-          onChange={handleTimeChange}
+            mode="time"
+            value={new Date()}
+            display="clock"
+            onChange={handleTimeChange}
           />
-          )}
-          <Text>{formData.duration}</Text>
+        )}
+        <Text>{duration}</Text>
       </View>
     </View>
   );

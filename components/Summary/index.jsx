@@ -6,9 +6,12 @@ const Summary = ({ data }) => {
     <View style={styles.container}>
       <Text style={styles.label}>Exercise: </Text>
       <Text style={styles.value}>{data?.exercise}</Text>
-
-      <Text style={styles.label}>Duration: </Text>
-      <Text style={styles.value}>{data?.duration}</Text>
+      {data?.duration ? (
+        <>
+          <Text style={styles.label}>Duration: </Text>
+          <Text style={styles.value}>{data?.duration}</Text>
+        </>
+      ) : null}
 
       <Text style={styles.label}>Calorie Consumption: </Text>
       <Text style={styles.value}>{data?.calorieConsumption}</Text>
@@ -22,20 +25,28 @@ const Summary = ({ data }) => {
   );
 };
 
+// Feeling fierce? Check out these badass styles!
+
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 20,
+    marginHorizontal: 20,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 40,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#ccc",
+    borderWidth: 2,
+    borderColor: "#f4f1de", // Embrace the darkness
+    backgroundColor: "#eddcd2", // Because black is the new black
     marginBottom: 20,
   },
   label: {
     fontWeight: "bold",
+    color: "#ff9900", // Add a splash of danger
+    textTransform: "uppercase", // Command attention
     marginBottom: 5,
   },
   value: {
+    color: "#000", // Let your words shine bright
     marginBottom: 10,
   },
 });

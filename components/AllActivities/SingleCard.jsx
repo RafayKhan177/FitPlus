@@ -9,10 +9,10 @@ export default function SingleCard({ activity, navigation }) {
     >
       <View style={styles.cardContainer}>
         <Card size="md" variant="elevated" style={styles.card}>
-          <Heading mb="$1" size="md">
+          <Heading mb="$1" size="md" style={styles.heading}>
             {activity?.exercise}
           </Heading>
-          <Text size="sm">{activity?.duration}</Text>
+          <Text style={styles.text}>{activity?.duration}</Text>
 
           <Text style={styles.label}>Timestamp: </Text>
           <Text style={styles.value}>{activity?.timestamp}</Text>
@@ -27,18 +27,31 @@ export default function SingleCard({ activity, navigation }) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 10,
+    margin: 10,
   },
   card: {
-    padding: 10,
+    padding: 40,
+    backgroundColor: "#006d77", // Dark and mysterious
+    borderRadius: 8,
+  },
+  heading: {
+    color: "#ff9900", // Add a splash of danger
+    textTransform: "uppercase", // Command attention
+    marginBottom: 5,
+  },
+  text: {
+    color: "#fff", // Let your words shine bright
+    marginBottom: 10,
   },
   label: {
     fontSize: 12,
     fontWeight: "bold",
+    color: "#ff9900", // Add a splash of danger
     marginTop: 5,
   },
   value: {
     fontSize: 12,
+    color: "#fff", // Let your words shine bright
     marginTop: 2,
   },
 });
